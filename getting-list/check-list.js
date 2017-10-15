@@ -18,7 +18,7 @@ request.get(list_url, (err, response, body) => {
   for(let i = 0; i < result.length; i++) {
     let market = result[i].Market;
     let summary = result[i].Summary;
-    if((market.BaseCurrency === 'BTC') && (summary.BaseVolume < limit_volume) && market.isActive) { // 비트코인 기준, 볼륨 작은 것만.
+    if((market.BaseCurrency === 'BTC') && (summary.BaseVolume < limit_volume) && market.IsActive) { // 비트코인 기준, 볼륨 작은 것만.
       connection.query('INSERT INTO market_names (market_name) VALUES (?)', [market.MarketName], (err, results) => {
         if(err) {
           return;
