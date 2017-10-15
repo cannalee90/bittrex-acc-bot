@@ -26,7 +26,7 @@ setTimeout(() => {
 
 setInterval(() => {
   get_history();
-}, 1000*60*1); // 5 minutes interval.
+}, 1000*60*5); // 5 minutes interval.
 
 const get_history = () => {
   log.logWithTime('get_history is called! ( interval 5 minutes )');
