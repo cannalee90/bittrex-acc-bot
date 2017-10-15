@@ -50,7 +50,11 @@ setInterval(() => {
 const tick_table = () => {
   log.logWithTime('tick_table is called! ( interval 1 minutes )');
   connection.query('DELETE FROM buy_rate', (err, results) => {
-    if(err) return;
+    if(err) {
+      log.logWithTime('Tick Table delete buy_rate Erorr');
+      console.log(err);
+      return;
+    }
     connection.query('INSERT INTO buy_rate (market_name, one_hour, three_hour, six_hour, half_day, one_day, three_day, one_week) ' +
       'SELECT ' +
       'b.market_name, ' +
@@ -63,7 +67,11 @@ const tick_table = () => {
       'b.one_week / (b.one_week + s.one_week) AS one_week ' +
       'FROM buy_volume b, sell_volume s WHERE b.market_name = s.market_name',
       (err, results, field) => {
-        if(err) return;
+        if(err) {
+          log.logWithTime('Tick Table select buy_rate Error');
+          console.log(err);
+          return;
+        }
         connection.query('SELECT * FROM buy_rate', (err, results) => {
           tables.buy_rate_table = results;
         });
