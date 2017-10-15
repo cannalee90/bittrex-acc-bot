@@ -58,13 +58,13 @@ const tick_table = () => {
     connection.query('INSERT INTO buy_rate (market_name, one_hour, three_hour, six_hour, half_day, one_day, three_day, one_week) ' +
       'SELECT ' +
       'b.market_name, ' +
-      'b.one_hour / (b.one_hour + s.one_hour) AS one_hour, ' +
-      'b.three_hour / (b.three_hour + s.three_hour) AS three_hour, ' +
-      'b.six_hour / (b.six_hour + s.six_hour) AS six_hour, ' +
-      'b.half_day / (b.half_day + s.half_day) AS half_day, ' +
-      'b.one_day / (b.one_day + s.one_day) AS one_day, ' +
-      'b.three_day / (b.three_day + s.three_day) AS three_day, ' +
-      'b.one_week / (b.one_week + s.one_week) AS one_week ' +
+      'IF((b.one_hour + s.one_hour) = 0, 0, b.one_hour / (b.one_hour + s.one_hour)) AS one_hour, ' +
+      'IF((b.three_hour + s.three_hour) = 0, 0, b.three_hour / (b.three_hour + s.three_hour)) AS three_hour, ' +
+      'IF((b.six_hour + s.six_hour) = 0, 0, b.six_hour / (b.six_hour + s.six_hour)) AS six_hour, ' +
+      'IF((b.half_day + s.half_day) = 0, 0, b.half_day / (b.half_day + s.half_day)) AS half_day, ' +
+      'IF((b.one_day + s.one_day) = 0, 0, b.one_day / (b.one_day + s.one_day)) AS one_day, ' +
+      'IF((b.three_day + s.three_day) = 0, 0, b.three_day / (b.three_day + s.three_day)) AS three_day, ' +
+      'IF((b.one_week + s.one_week) = 0, 0, b.one_week / (b.one_week + s.one_week)) AS one_week ' +
       'FROM buy_volume b, sell_volume s WHERE b.market_name = s.market_name',
       (err, results, field) => {
         if(err) {
