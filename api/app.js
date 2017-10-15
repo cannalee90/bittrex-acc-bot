@@ -5,7 +5,16 @@ const express = require('express');
 const app = express();
 const log = require('../util/log.js');
 
-let connection = mysql.createConnection(db_conf.module);
+env(__dirname + '/../.env');
+
+console.log(process.env.MYSQL_HOST);
+
+let connection = mysql.createConnection({
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+});
 
 connection.connect();
 
