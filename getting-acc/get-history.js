@@ -26,7 +26,7 @@ setTimeout(() => {
 
 setInterval(() => {
   get_history();
-}, 1000*60*5); // 5 minutes interval.
+}, 1000*60*1); // 5 minutes interval.
 
 const get_history = () => {
   log.logWithTime('get_history is called! ( interval 5 minutes )');
@@ -35,6 +35,7 @@ const get_history = () => {
       try {
         body = JSON.parse(body);
       } catch (e) {
+        log.logWithTime('get History Error');
         log.logWithTime(err);
         return;
       }
@@ -44,7 +45,8 @@ const get_history = () => {
       if(results !== null && results.length !== null)
         for(let j = 0; j < results.length; j++) {
           let obj = results[j];
-          connection.query('INSERT INTO history_' + util.parseMarketName(names[i].market_name) + ' (id, timestamp, total, order_type) VALUES (?, ?, ?, ?)',
+          const historyQuery = 'INSERT INTO history_' + util.parseMarketName(names[i].market_name) + ' (id, timestamp, total, order_type) VALUES (?, ?, ?, ?)';
+          connection.query(historyQuery,
           [obj.Id, obj.TimeStamp, obj.Total, obj.OrderType], (err, results) => {
             if(err) {
               // occured Error: ER_DUP_ENTRY: Duplicate entry 'XXXXXX' for key 'id'
