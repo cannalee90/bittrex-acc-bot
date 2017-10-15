@@ -1,15 +1,13 @@
 const mysql = require('mysql');
-const db_conf = require('../conf/db-conf.js');
+const env = require('node-env-file');
+const path = require('path');
+const express = require('express');
+const app = express();
+const log = require('../util/log.js');
 
 let connection = mysql.createConnection(db_conf.module);
 
 connection.connect();
-
-const path = require('path');
-const express = require('express');
-const app = express();
-
-const log = require('../util/log.js');
 
 const tables = {
   buy_rate_table: null,
