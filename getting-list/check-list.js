@@ -8,7 +8,7 @@ const log = require('../util/log.js');
 let connection = mysql.createConnection(db_conf.module);
 
 let list_url = 'https://bittrex.com/api/v2.0/pub/Markets/GetMarketSummaries';
-let limit_volume = 100;
+let limit_volume = 2000;
 
 connection.connect();
 
